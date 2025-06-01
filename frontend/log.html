@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Log Aktivitas</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Log Aktivitas Sistem</h2>
+        <table id="logTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Waktu</th>
+                    <th>Aksi</th>
+                    <th>Detail</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data akan diisi oleh JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        async function displayLog() {
+            try {
+                const data = await api.getLog();
+                const tableBody = document.querySelector('#logTable tbody');
+                
+                tableBody.innerHTML = data.map(item => `
+                    <tr>
+                        <td>${item.id_log}</td>
+                        <td>${new Date(item.waktu).toLocaleString()}</td>
+                        <td>${item.aksi}</td>
+                        <td>${item.detail}</td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Gagal mengambil data log');
+            }
+        }
+
+        // Load data saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', displayLog);
+    </script>
+</body>
+</html> 

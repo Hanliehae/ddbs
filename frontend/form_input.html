@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Input Pemeriksaan</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Input Data Pemeriksaan</h2>
+        <form id="pemeriksaanForm">
+            <label>Nama Pasien:</label>
+            <input type="text" name="nama_pasien" required>
+
+            <label>Alamat:</label>
+            <input type="text" name="alamat" required>
+
+            <label>Tanggal Pendaftaran:</label>
+            <input type="date" name="tanggal" required>
+
+            <label>Dokter:</label>
+            <select name="id_dokter" required>
+                <option value="201">Dr. Sari</option>
+                <option value="202">Dr. Joko</option>
+            </select>
+
+            <label>Diagnosa:</label>
+            <input type="text" name="diagnosa" required>
+
+            <input type="submit" value="Simpan">
+        </form>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        document.getElementById('pemeriksaanForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const result = await api.createPemeriksaan(data);
+                alert(result.message);
+                window.location.href = 'data_pemeriksaan.html';
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html> 
